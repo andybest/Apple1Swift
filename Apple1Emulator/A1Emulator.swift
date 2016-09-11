@@ -41,7 +41,13 @@ class A1Emulator {
     
     // MARK - Serial Sent
     func serialSent(_ value: UInt8) {
-        keyboardByte = value
+        if(value == 0x0A)
+        {
+            // Convert line feed to carriage return
+            keyboardByte = 0x0D
+        } else {
+            keyboardByte = value
+        }
     }
     
     // MARK - Memory callbacks
@@ -50,12 +56,17 @@ class A1Emulator {
         if(address == RegisterKeyboardInput) {             // Keyboard input
             if keyboardByte != nil {
                 defer { keyboardByte = nil }
-                return keyboardByte!
+                return keyboardByte! | 0x80
             }
-            return 0xFF
+            return 0x00
         } else if address == RegisterKeyboardControl {       // Return pressed
-            return 0
-        } else {
+            if(keyboardByte != nil) {
+                return 0x80
+            }
+            return 0x00
+        } else if address == RegisterDisplayControl {
+            return 0x80
+        }else {
             return ram[Int(address)]
         }
     }
@@ -64,11 +75,16 @@ class A1Emulator {
         if(address == RegisterDisplayOutput) {             // Display out
             if((delegate) != nil)
             {
-                delegate!.emulatorDidSendSerial(value)
+                if value == 0x8D {      // New line
+                    delegate!.emulatorDidSendSerial(0x0A)
+                } else {
+                    let output = value & 0x7F
+                    delegate!.emulatorDidSendSerial(output)
+                }
             }
         } else if address == RegisterDisplayControl {       // Display new line
             
-        }else {
+        } else {
             ram[Int(address)] = value
         }
     }
