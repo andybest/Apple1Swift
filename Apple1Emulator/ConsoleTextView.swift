@@ -197,24 +197,20 @@ class ConsoleTextView: NSView {
         interpretKeyEvents([event])
     }
     
-    /*
-    override func insertText(_ insertString: AnyObject) {
+     /*func insertText(insertString: AnyObject) {
+     
+    }*/
+    override func insertText(_ insertString: Any) {
         self.sendString(insertString as! String)
     }
     
-    override func moveUp(_ sender: AnyObject?) {
-    }
-    
-    override func moveLeft(_ sender: AnyObject?) {
-    }
-    
-    override func deleteBackward(_ sender: AnyObject?) {
+    override func deleteBackward(_ sender: Any?) {
         self.sendBackspace()
     }
     
-    override func insertNewline(_ sender: AnyObject?) {
+    override func insertNewline(_ sender: Any?) {
         self.sendNewLine()
-    }*/
+    }
     
     // MARK - Process Data
     
