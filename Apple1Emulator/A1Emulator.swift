@@ -37,6 +37,8 @@ class A1Emulator {
         
         let monitorPath = Bundle.main.path(forResource: "wozmon", ofType: "hex")
         cpu.loadHexFileToMemory(monitorPath!)
+        
+        cpu.reset()
     }
     
     // MARK - Serial Sent
@@ -78,8 +80,9 @@ class A1Emulator {
                 if value == 0x8D {      // New line
                     delegate!.emulatorDidSendSerial(0x0A)
                 } else {
-                    let output = value & 0x7F
-                    delegate!.emulatorDidSendSerial(output)
+                    let output = UInt16(value & 0x7F)
+                    
+                    delegate!.emulatorDidSendSerial(UInt8(output & 0xFF))
                 }
             }
         } else if address == RegisterDisplayControl {       // Display new line
