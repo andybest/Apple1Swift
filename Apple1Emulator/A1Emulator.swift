@@ -38,6 +38,9 @@ class A1Emulator {
         let monitorPath = Bundle.main.path(forResource: "wozmon", ofType: "hex")
         cpu.loadHexFileToMemory(monitorPath!)
         
+        let basicPath = Bundle.main.path(forResource: "basic", ofType: "hex")
+        cpu.loadHexFileToMemory(basicPath!)
+        
         cpu.reset()
     }
     

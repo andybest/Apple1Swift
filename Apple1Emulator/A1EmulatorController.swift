@@ -23,7 +23,7 @@ class A1EmulatorController : A1EmulatorDelegate, SerialWindowDelegate {
     }
     
     @objc func timerFired() {
-        _ = emulator.cpu.runCycles(10)
+        _ = emulator.cpu.runCycles(1000)
     }
     
     

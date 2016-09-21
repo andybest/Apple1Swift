@@ -366,6 +366,7 @@
 				A5BA08E21D8302F2000808D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
